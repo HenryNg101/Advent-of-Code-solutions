@@ -1,4 +1,5 @@
-# Template
+# Only applicable for this part, not for next part
+# Need to optimize later for next part
 content = open("input").read().split('\n')
 content.pop()
 
@@ -10,8 +11,10 @@ def print_ls(visited):
         print()
 
 visited = [[False for _ in range(1000)] for _ in range(1000)]
-
-knots = [[500, 500] for _ in range(10)]
+row_H = 500
+col_H = 500
+row_T = 500
+col_T = 500
 count = 0
 
 for line in content:
