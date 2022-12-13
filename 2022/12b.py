@@ -35,10 +35,8 @@ def bfs(start_r, start_c, end_r, end_c, content):
 content = open("input").read().split('\n')
 content.pop()
 content = [list(i) for i in content]
-#print(len(content))
-#print(len(content[0]))
 
-start_r, start_c, end_r, end_c = -1, -1, -1, -1
+start_r, start_c, end_r, end_c = -1, -1
 
 for i in range(len(content)):
     for j in range(len(content[i])):
@@ -49,6 +47,16 @@ for i in range(len(content)):
             end_r, end_c = i, j
             content[i][j] = 'z'
 
-print((start_r, start_c))
-print((end_r, end_c))
+#Part A
 print(bfs(start_r, start_c, end_r, end_c, content))
+
+#Part B
+res = 9999999999999999
+for i in range(len(content)):
+    for j in range(len(content[i])):
+        if content[i][j] == 'a':
+            temp = bfs(i, j, end_r, end_c, content)
+            if temp != -1:
+                res = min(res, temp)
+
+print(res)

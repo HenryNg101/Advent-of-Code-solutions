@@ -15,7 +15,6 @@ def bfs(start_r, start_c, end_r, end_c, content):
 
     while not q.empty():
         sz = q.qsize()
-        #print(sz)
         for _ in range(sz):
             curr_r, curr_c = q.get()
             visited[curr_r][curr_c] = True
@@ -35,8 +34,6 @@ def bfs(start_r, start_c, end_r, end_c, content):
 content = open("input").read().split('\n')
 content.pop()
 content = [list(i) for i in content]
-#print(len(content))
-#print(len(content[0]))
 
 start_r, start_c, end_r, end_c = -1, -1, -1, -1
 
@@ -49,6 +46,16 @@ for i in range(len(content)):
             end_r, end_c = i, j
             content[i][j] = 'z'
 
-print((start_r, start_c))
-print((end_r, end_c))
-print(bfs(start_r, start_c, end_r, end_c, content))
+#Part A
+print(f'Part A answer is: {bfs(start_r, start_c, end_r, end_c, content)}')
+
+#Part B (Would need to optimize this so it can run faster, but, whatever)
+res = 9999999999999999
+for i in range(len(content)):
+    for j in range(len(content[i])):
+        if content[i][j] == 'a':
+            temp = bfs(i, j, end_r, end_c, content)
+            if temp != -1:
+                res = min(res, temp)
+
+print(f'Part B answer is: {res}')
