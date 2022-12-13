@@ -5,12 +5,14 @@ def is_valid(curr_r, curr_c, new_r, new_c, visited, content):
         return False
     if visited[new_r][new_c]:
         return False
-    return ord(content[new_r][new_c]) - ord(content[curr_r][curr_c]) <= 1
+    return ord(content[new_r][new_c]) - ord(content[curr_r][curr_c]) >= -1
 
+#The trick here is to start tracking from end point to start, as there will be multiple starting points in task B
 def bfs(start_r, start_c, end_r, end_c, content):
     q = Queue()
-    q.put((start_r, start_c))
-    lv = 0
+    q.put((end_r, end_c))
+    res_A = 0
+    res_B = 9999999999999999
     visited = [[False for _ in range(len(content[0]))] for _ in range(len(content))]
 
     while not q.empty():
@@ -19,22 +21,25 @@ def bfs(start_r, start_c, end_r, end_c, content):
             curr_r, curr_c = q.get()
             visited[curr_r][curr_c] = True
 
-            if (curr_r, curr_c) == (end_r, end_c):
-                return lv
+            if (curr_r, curr_c) == (start_r, start_c):
+                return res_A, res_B
+            
+            #As soon as it meets an a, which is a possible start point (for task B), 
+            if content[curr_r][curr_c] == 'a':
+                res_B = min(res_B, res_A)
 
             for i in [(-1, 0),(1, 0),(0, 1),(0, -1)]:
                 new_r, new_c = curr_r + i[0], curr_c + i[1]
                 if is_valid(curr_r, curr_c, new_r, new_c, visited, content):
                     q.put((new_r, new_c))
                     visited[new_r][new_c] = True 
-        lv += 1
-
-    return -1
+        res_A += 1
+    #If nothing is found
+    return -1, -1
 
 content = open("input").read().split('\n')
 content.pop()
 content = [list(i) for i in content]
-
 start_r, start_c, end_r, end_c = -1, -1, -1, -1
 
 for i in range(len(content)):
@@ -46,16 +51,4 @@ for i in range(len(content)):
             end_r, end_c = i, j
             content[i][j] = 'z'
 
-#Part A
-print(f'Part A answer is: {bfs(start_r, start_c, end_r, end_c, content)}')
-
-#Part B (Would need to optimize this so it can run faster, but, whatever)
-res = 9999999999999999
-for i in range(len(content)):
-    for j in range(len(content[i])):
-        if content[i][j] == 'a':
-            temp = bfs(i, j, end_r, end_c, content)
-            if temp != -1:
-                res = min(res, temp)
-
-print(f'Part B answer is: {res}')
+print(f'Part A and B answers are: {bfs(start_r, start_c, end_r, end_c, content)}, consecutively')
