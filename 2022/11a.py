@@ -18,7 +18,7 @@ class Monkey:
             val *= int(self.factor)
         else:
             val += int(self.factor)
-        #val //= 3
+        val //= 3
         return val
 
 content = open("input").read().split('\n')
@@ -52,15 +52,12 @@ while id < len(content):
 monkeys = [monkey for monkey in monkeys]
 
 """Actual calculation"""
-for _ in range(1):
+for _ in range(20):
     for id in range(len(monkeys)):
         while len(monkeys[id].items) > 0:
             new_it = monkeys[id].calc()
             next_id = monkeys[id].next[0] if new_it % monkeys[id].div == 0 else monkeys[id].next[1]
             monkeys[next_id].items.append(new_it)
 
-#monkeys.sort(key=lambda x: x.count, reverse=True)
-for monkey in monkeys:
-    print(monkey.items)
-
-#print(monkeys[0].count * monkeys[1].count)
+monkeys.sort(key=lambda x: x.count, reverse=True)
+print(monkeys[0].count * monkeys[1].count)
