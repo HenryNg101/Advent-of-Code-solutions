@@ -1,9 +1,15 @@
-def traverse(mp: set, max_r: int):
-    curr_r, curr_c = 0, 500
-    count = 0
+def print_grids(grids):
+    for line in grids:
+        for char in line:
+            print(char, end='')
+        print()
 
+def traverse(mp: set, max_r: int):
+    global grids
+
+    curr_r, curr_c = 0, 500
     #Move this one down first
-    while curr_r < max_r - 1:
+    while curr_r < max_r:
         if (curr_r + 1, curr_c) not in mp:
             curr_r += 1
         elif (curr_r + 1, curr_c - 1) not in mp:
@@ -12,14 +18,16 @@ def traverse(mp: set, max_r: int):
             curr_r, curr_c = curr_r + 1, curr_c + 1
         else:
             break
-    count += 1
+    if curr_r >= max_r:
+        return 0
     mp.add((curr_r, curr_c))
-    if (curr_r, curr_c) == (0, 500):
-            return count
+    grids[curr_r][curr_c] = 'o'
+    #print_grids(grids)
 
+    count = 1
     while True:
         next_r, next_c = curr_r - 1, curr_c
-        while next_r < max_r - 1:
+        while next_r < max_r:
             if (next_r + 1, next_c) not in mp:
                 next_r += 1
             elif (next_r + 1, next_c - 1) not in mp:
@@ -29,12 +37,13 @@ def traverse(mp: set, max_r: int):
             else:
                 break
 
+        if next_r >= max_r:
+            return count
+
         count += 1
         mp.add((next_r, next_c))
+        grids[next_r][next_c] = 'o'
         curr_r = min(curr_r, next_r)
-
-        if (next_r, next_c) == (0, 500):
-            return count
 
 content = open("input").read().split('\n')
 content.pop()
@@ -61,5 +70,8 @@ for line in content:
         mp.add((row, col))
         max_r = max(max_r, row)
 
-max_r += 2      #The actual ground
+grids = [['.' for _ in range(540)] for _ in range(200)]
+for i in mp:
+    grids[i[0]][i[1]] = '#'
 print(traverse(mp, max_r))
+#print_grids(grids)
