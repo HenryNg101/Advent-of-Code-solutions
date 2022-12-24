@@ -1,6 +1,9 @@
+import time
+
 def eval_char(ch):
     return ord(ch) - ord('A') + 27 if ch.isupper() else ord(ch) - ord('a') + 1
 
+start_time = time.process_time()
 content = open("input").read().split('\n')
 content.pop()
 #Part A
@@ -18,3 +21,5 @@ for i in range(0, len(content), 3):
 
 print(f'Part A solution is: {res_A}')
 print(f'Part B solution is: {res_B}')
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

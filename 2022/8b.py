@@ -1,3 +1,6 @@
+import time
+
+start_time = time.process_time()
 # Template
 content = open("input").read().split('\n')
 content.pop()
@@ -29,3 +32,5 @@ for r in range(len(content)):
         res = max(res, up * down * left * right)
 
 print(res)
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

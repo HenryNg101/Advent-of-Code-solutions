@@ -1,3 +1,6 @@
+import time
+
+start_time = time.process_time()
 content = open("input").read().split('\n')
 content.pop()
 
@@ -37,6 +40,8 @@ def main(knots_count: int):
 
 print(f'Part A answer is: {main(2)}')
 print(f'Part B answer is: {main(10)}')
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")
 
 """ 
 a = rH - rT, b = cH - cT (H is head, T is tail)

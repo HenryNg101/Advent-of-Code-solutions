@@ -1,3 +1,6 @@
+import time
+
+start_time = time.process_time()
 # Custom directory's tree data structure
 class Directory:
     def __init__(self, parent_dir=None) -> None:
@@ -52,3 +55,5 @@ traverse(root)
 find_min_dir_with_threshold(root, 30000000 - (70000000 - root.size))
 print(f'Part a answer is: {sum_dirs}')
 print(f'Part b answer is: {min_dir_sz}')
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

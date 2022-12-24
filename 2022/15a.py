@@ -1,3 +1,6 @@
+import time
+
+start_time = time.process_time()
 content = open("input").read().split('\n')
 content.pop()
 
@@ -31,10 +34,10 @@ for line in content:
     if locs[3] == target_y:
         excluded_xs.add(locs[2])
 
-print(f'{min_x} {max_x}')
-print(excluded_xs)
 total += abs(min_x - max_x) + 1
 for val in excluded_xs:
     if min_x <= val <= max_x:
         total -= 1
 print(total)
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

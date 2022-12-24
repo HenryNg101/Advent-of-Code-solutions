@@ -1,3 +1,7 @@
+import time
+
+start_time = time.process_time()
+
 def print_grids(grids):
     for line in grids:
         for char in line:
@@ -22,7 +26,6 @@ def traverse(mp: set, max_r: int):
         return 0
     mp.add((curr_r, curr_c))
     grids[curr_r][curr_c] = 'o'
-    #print_grids(grids)
 
     count = 1
     while True:
@@ -74,4 +77,5 @@ grids = [['.' for _ in range(540)] for _ in range(200)]
 for i in mp:
     grids[i[0]][i[1]] = '#'
 print(traverse(mp, max_r))
-#print_grids(grids)
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

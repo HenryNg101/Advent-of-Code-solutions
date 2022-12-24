@@ -1,3 +1,7 @@
+import time
+
+start_time = time.process_time()
+
 def traverse(mp: set, max_r: int):
     curr_r, curr_c = 0, 500
     count = 0
@@ -63,3 +67,5 @@ for line in content:
 
 max_r += 2      #The actual ground
 print(traverse(mp, max_r))
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

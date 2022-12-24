@@ -1,3 +1,6 @@
+import time
+
+start_time = time.process_time()
 # The number of spaces for each element in stacks's row (except last stack elements)
 n = 4
 content = open("input").read().split('\n')
@@ -37,3 +40,5 @@ res = ""
 for e in st:
     res += e[-1]
 print(res)
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

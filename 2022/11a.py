@@ -1,3 +1,7 @@
+import time
+
+start_time = time.process_time()
+
 class Monkey:
     def __init__(self) -> None:
         self.items = []
@@ -61,3 +65,5 @@ for _ in range(20):
 
 monkeys.sort(key=lambda x: x.count, reverse=True)
 print(monkeys[0].count * monkeys[1].count)
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

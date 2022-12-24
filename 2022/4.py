@@ -1,3 +1,6 @@
+import time
+
+start_time = time.process_time()
 content = open("input").read().split('\n')
 content.pop()
 counter_A = 0   #Inclusion check
@@ -13,3 +16,5 @@ for line in content:
 
 print(f'Part A solution is: {counter_A}')
 print(f'Part B solution is: {counter_B}')
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

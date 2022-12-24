@@ -1,4 +1,7 @@
 from functools import cmp_to_key
+import time
+
+start_time = time.process_time()
 
 """
 Create a list from string
@@ -92,3 +95,5 @@ res_B.sort(key=cmp_to_key(compare_ls), reverse=True)
 
 print(f'Part A answer is: {res_A}')
 print(f'Part B answer is: {(res_B.index([[2]]) + 1) * (res_B.index([[6]]) + 1)}')
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")

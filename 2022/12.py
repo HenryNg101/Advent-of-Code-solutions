@@ -1,4 +1,7 @@
 from queue import Queue
+import time
+
+start_time = time.process_time()
 
 def is_valid(curr_r, curr_c, new_r, new_c, visited, content):
     if new_r < 0 or new_r >= len(content) or new_c < 0 or new_c >= len(content[0]):
@@ -52,3 +55,5 @@ for i in range(len(content)):
             content[i][j] = 'z'
 
 print(f'Part A and B answers are: {bfs(start_r, start_c, end_r, end_c, content)}, consecutively')
+elapsed_time = (time.process_time() - start_time)
+print(f"Elapsed time: {elapsed_time * 1000} ms, {elapsed_time} seconds")
