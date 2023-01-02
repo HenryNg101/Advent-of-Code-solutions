@@ -9,7 +9,3 @@ How to run code for each challenge:
 - Download input file, save the file's name as `input` (with out any extension) in same directory as the file you want to run.
 - Run command `g++ -o out <filename>.cpp; ./out` (for C++ files), `python3 <filename>.py` (for Python files)
 - Only files of days and parts I have done works, other just are drafts, pls don't run
-
-## AoC 2022 current stats
-
-![2022 stats](/2022/img/2022%20stats.png)
