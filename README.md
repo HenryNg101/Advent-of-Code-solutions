@@ -2,10 +2,6 @@
 
 You can find each year solutions in the directory that has that year.
 
-Each day has 2 parts, so I separated them into part a and b, or merge them together (meaning that I have been able to to get solutions for both parts from one code file)
+How to run code: Just change your `session` value in file `inputGetter.py` to your own cookie's `session` value. Then, create Python virtual environment and install needed modules in `requirements.txt` file. That's all, then just run a notebook as you wish
 
-How to run code for each challenge:
-
-- Download input file, save the file's name as `input` (with out any extension) in same directory as the file you want to run.
-- Run command `g++ -o out <filename>.cpp; ./out` (for C++ files), `python3 <filename>.py` (for Python files)
-- Only files of days and parts I have done works, other just are drafts, pls don't run
+Note: Only files of days and parts I have done works, other just are drafts, pls don't run.
