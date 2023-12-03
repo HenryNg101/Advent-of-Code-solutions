@@ -65,10 +65,10 @@ for r in range(sz_r):
         #Part 1
         if not input[r][c].isnumeric() and input[r][c] not in ['.', '\n']:
             engine_numbers(r, c)
-        
-        #Part 2
-        if input[r][c] == '*':
-            res_b += valid_gears(r, c)
+            
+            #Part 2
+            if input[r][c] == '*':
+                res_b += valid_gears(r, c)
             
 print(f"Part 1: {res_a}")
 print(f"Part 2: {res_b}")
