@@ -1,9 +1,5 @@
 from typing import Dict, Tuple
 
-input = open("input").readlines()
-sz_r, sz_c = len(input), len(input[0])
-res_a, res_b = 0, 0
-
 '''Return adjacent positions of a position'''
 def adjacent_map(r: int, c: int) -> Dict[Tuple[int, int], bool]:
     return { 
@@ -58,6 +54,11 @@ def valid_gears(r: int, c: int) -> int:
     
     return prod if gears_count == 2 else 0
 
+
+#Main code
+input = open("input").readlines()
+sz_r, sz_c = len(input), len(input[0])
+res_a, res_b = 0, 0
 
 for r in range(sz_r):
     for c in range(sz_c):
