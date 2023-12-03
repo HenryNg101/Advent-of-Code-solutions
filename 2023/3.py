@@ -13,7 +13,7 @@ def adjacent_map(r: int, c: int) -> Dict[Tuple[int, int], bool]:
 
 
 '''Helper function, to find a number, given a position of a digit of that number'''
-def find_number(r: int, c: int, visited) -> int:
+def find_number(r: int, c: int, visited: Dict[Tuple[int, int], bool]) -> int:
     #Find start and end of the number
     start = end = c
     while start >= 0 and input[r][start].isnumeric():
@@ -30,7 +30,7 @@ def find_number(r: int, c: int, visited) -> int:
 
 
 '''Part 1's function, to add all possible numbers surrounded by a symbol'''
-def engine_numbers(r: int, c: int) -> int:
+def engine_numbers(r: int, c: int) -> None:
     visited = adjacent_map(r, c)
     global res_a
     
