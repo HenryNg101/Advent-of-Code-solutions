@@ -9,10 +9,10 @@ for numbers_sets in input:
     
     #Make it a set of winning numbers
     winning_numbers = {int(number) for number in winning_numbers if number.isnumeric()}
-    owned_numbers = [int(number) for number in owned_numbers if len(number) > 0]
+    owned_numbers = {int(number) for number in owned_numbers if len(number) > 0}
 
     #Count the amount of winning numbers you have in your set
-    winning_cards_count = sum(1 for number in owned_numbers if number in winning_numbers)
+    winning_cards_count = len(winning_numbers & owned_numbers)
 
     
     #Part 1 calculation
