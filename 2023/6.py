@@ -11,7 +11,7 @@ Assuming that:
 Then, this is what we have:
 x + y = b, x * y > c
 => x * (b - x) > c
-=> x ** 2 - bx + c > 0
+=> x ** 2 - bx + c < 0
 
 To solve the above equation, solve this first:
 x ** 2 - bx + c = 0
