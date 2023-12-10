@@ -62,6 +62,9 @@ def dfs(r, c):
     
     while len(st) > 0:
         curr_r, curr_c = st.pop()
+        
+        if curr_r in [0, new_row_sz - 1] or curr_c in [0, new_col_sz - 1]:
+            valid_area = False
         if curr_r % 2 == 0 and curr_c % 2 == 0 and not (curr_r, curr_c) in visited:
             res += 1
         
@@ -70,17 +73,18 @@ def dfs(r, c):
         for loc_r, loc_c in adjacent_locs:
             new_r, new_c = curr_r + loc_r, curr_c + loc_c
             
-            if (new_r, new_c) in visited or new_r < 0 or new_r >= row_sz * 2 or new_c < 0 or new_c >= col_sz * 2 or new_arr[new_r][new_c] == 'x':
+            if (new_r, new_c) in visited or new_r < 0 or new_r >= new_row_sz or new_c < 0 or new_c >= new_col_sz or new_arr[new_r][new_c] == 'x':
                 continue
             
-            valid_area &= (new_r != 0 and new_r != row_sz * 2 - 1 and new_c != 0 and new_c != col_sz * 2 - 1)
             st.append((new_r, new_c))
 
     return res if valid_area else 0
 
+
 # Create new array with double size to zoom up the map
 # This is needed to see the little gaps, that are not visible in the original map
-new_arr = [['.' for _ in range(col_sz * 2)] for _ in range(row_sz * 2)]
+new_col_sz, new_row_sz = col_sz * 2, row_sz * 2
+new_arr = [['.' for _ in range(new_col_sz)] for _ in range(new_row_sz)]
 
 # Marked the main loop areas
 for r, c in visited:
@@ -89,8 +93,8 @@ for r, c in visited:
         new_arr[r*2 + move_r][c*2 + move_c] = 'x'
 
 res_b = 0
-for r in range(row_sz * 2):
-    for c in range(col_sz * 2):
+for r in range(new_row_sz):
+    for c in range(new_col_sz):
         if (r, c) not in visited and new_arr[r][c] == '.':
             res_b += dfs(r, c)
 
