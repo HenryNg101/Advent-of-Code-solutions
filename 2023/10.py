@@ -1,3 +1,5 @@
+import numpy as np
+
 input = [list(line.strip()) for line in open("input").readlines()]
 visited = set()
 queue = []
@@ -63,9 +65,10 @@ def dfs(r, c):
     while len(st) > 0:
         curr_r, curr_c = st.pop()
         
-        if curr_r in [0, new_row_sz - 1] or curr_c in [0, new_col_sz - 1]:
+        if curr_r in [0, row_sz - 1] or curr_c in [0, col_sz - 1]:
             valid_area = False
-        if curr_r % 2 == 0 and curr_c % 2 == 0 and not (curr_r, curr_c) in visited:
+        # Only take the ones that are int, not float coordinates
+        if int(curr_r) == curr_r and int(curr_c) == curr_c and not (curr_r, curr_c) in visited:
             res += 1
         
         visited.add((curr_r, curr_c))
@@ -73,29 +76,31 @@ def dfs(r, c):
         for loc_r, loc_c in adjacent_locs:
             new_r, new_c = curr_r + loc_r, curr_c + loc_c
             
-            if (new_r, new_c) in visited or new_r < 0 or new_r >= new_row_sz or new_c < 0 or new_c >= new_col_sz or new_arr[new_r][new_c] == 'x':
+            if (new_r, new_c) in visited or new_r < 0 or new_r >= row_sz or new_c < 0 or new_c >= col_sz:
                 continue
             
             st.append((new_r, new_c))
 
     return res if valid_area else 0
 
+# Updated value for part 2, by half the values of coordinates, to consider little gaps
+# We now consider that, coordinates of little gaps in between are .5
+pipes_directions = {
+    key: [(r / 2, c / 2) for r, c in value] for key, value in pipes_directions.items()
+}
+adjacent_locs = [(r / 2, c / 2) for r, c in adjacent_locs]
 
-# Create new array with double size to zoom up the map
-# This is needed to see the little gaps, that are not visible in the original map
-new_col_sz, new_row_sz = col_sz * 2, row_sz * 2
-new_arr = [['.' for _ in range(new_col_sz)] for _ in range(new_row_sz)]
-
-# Marked the main loop areas
+# Expand to fill little gaps, using direction of the pipes in the main loop
+expanded_st = set()
 for r, c in visited:
-    new_arr[r*2][c*2] = 'x'
     for move_r, move_c in pipes_directions[input[r][c]]:
-        new_arr[r*2 + move_r][c*2 + move_c] = 'x'
+        expanded_st.add((r + move_r, c + move_c))
+
+visited |= expanded_st
 
 res_b = 0
-for r in range(new_row_sz):
-    for c in range(new_col_sz):
-        if (r, c) not in visited and new_arr[r][c] == '.':
-            res_b += dfs(r, c)
+for r in np.arange(0, row_sz, 0.5):
+    for c in np.arange(0, col_sz, 0.5):
+        res_b += dfs(r, c) if (r, c) not in visited else 0
 
 print(f'Part 2: {res_b}')
