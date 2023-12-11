@@ -26,5 +26,5 @@ for line in input:
     res_a += find_first_number_a(line) * 10 + find_first_number_a(line[::-1])
     res_b += find_first_number_b(0, len(line)) * 10 + find_first_number_b(len(line) - 1, -1, -1)
 
-print(f'P1: {res_a}')
-print(f'P2: {res_b}')
+print(f'Part 1: {res_a}')
+print(f'Part 2: {res_b}')

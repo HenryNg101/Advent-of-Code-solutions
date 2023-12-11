@@ -1,7 +1,7 @@
 import numpy as np
 
 input = [list(line.strip()) for line in open("input").readlines()]
-visited = set()
+visited_locs = set()
 queue = []
 row_sz, col_sz = len(input), len(input[0])
 
@@ -11,7 +11,7 @@ pipes_directions = {
 }
 adjacent_locs = [(0,1), (0,-1), (1,0), (-1,0)]
 
-#Find out and reassign the starting 'S' position
+#Find out and reassign the starting 'S' position to the appropriate pipe type, to seal off the loop
 for r in range(row_sz):
     for c in range(col_sz):
         if input[r][c] == 'S':
@@ -43,11 +43,11 @@ while queue:
     sz = len(queue)
     for _ in range(sz):
         curr_r, curr_c = queue.pop(0)
-        visited.add((curr_r, curr_c))
+        visited_locs.add((curr_r, curr_c))
         
         for loc_r, loc_c in pipes_directions[input[curr_r][curr_c]]:
             new_r, new_c = curr_r + loc_r, curr_c + loc_c
-            if (new_r, new_c) not in visited:
+            if (new_r, new_c) not in visited_locs:
                 queue.append((new_r, new_c))
             
     res_a += 1
@@ -68,15 +68,15 @@ def dfs(r, c):
         if curr_r in [0, row_sz - 1] or curr_c in [0, col_sz - 1]:
             valid_area = False
         # Only take the ones that are int, not float coordinates
-        if int(curr_r) == curr_r and int(curr_c) == curr_c and not (curr_r, curr_c) in visited:
+        if int(curr_r) == curr_r and int(curr_c) == curr_c and not (curr_r, curr_c) in visited_locs:
             res += 1
         
-        visited.add((curr_r, curr_c))
+        visited_locs.add((curr_r, curr_c))
         
         for loc_r, loc_c in adjacent_locs:
             new_r, new_c = curr_r + loc_r, curr_c + loc_c
             
-            if (new_r, new_c) in visited or new_r < 0 or new_r >= row_sz or new_c < 0 or new_c >= col_sz:
+            if (new_r, new_c) in visited_locs or new_r < 0 or new_r >= row_sz or new_c < 0 or new_c >= col_sz:
                 continue
             
             st.append((new_r, new_c))
@@ -85,22 +85,15 @@ def dfs(r, c):
 
 # Updated value for part 2, by half the values of coordinates, to consider little gaps
 # We now consider that, coordinates of little gaps in between are .5
-pipes_directions = {
-    key: [(r / 2, c / 2) for r, c in value] for key, value in pipes_directions.items()
-}
-adjacent_locs = [(r / 2, c / 2) for r, c in adjacent_locs]
+pipes_directions = { k: [(r/2, c/2) for r, c in v] for k, v in pipes_directions.items() }
+adjacent_locs = [(r/2, c/2) for r, c in adjacent_locs]
 
 # Expand to fill little gaps, using direction of the pipes in the main loop
-expanded_st = set()
-for r, c in visited:
-    for move_r, move_c in pipes_directions[input[r][c]]:
-        expanded_st.add((r + move_r, c + move_c))
-
-visited |= expanded_st
+visited_locs |= set([(r + move_r, c + move_c) for r, c in visited_locs for move_r, move_c in pipes_directions[input[r][c]]])
 
 res_b = 0
 for r in np.arange(0, row_sz, 0.5):
     for c in np.arange(0, col_sz, 0.5):
-        res_b += dfs(r, c) if (r, c) not in visited else 0
+        res_b += dfs(r, c) if (r, c) not in visited_locs else 0
 
 print(f'Part 2: {res_b}')
