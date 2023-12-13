@@ -2,7 +2,6 @@ from typing import List, Tuple
 
 def process_map(mp: List[List[str]], old_res: Tuple[int, int] = None) -> Tuple[int, int] | None:
     sz_r, sz_c = len(mp), len(mp[0])
-    
     # Contains common middle ids of palindromes in all rows and cols
     palindrome_mids_horizontal, palindrome_mids_vertical = set(), set()
 
@@ -23,21 +22,16 @@ def process_map(mp: List[List[str]], old_res: Tuple[int, int] = None) -> Tuple[i
     
         palindrome_mids_horizontal = row_palindrome_mids if row_id == 0 else palindrome_mids_horizontal.intersection(row_palindrome_mids)
 
-    # Checking for horizontal split, the id that is the mid of palindrome(s) in all rows
-    if palindrome_mids_horizontal:
-        palindrome_mids_horizontal = list(palindrome_mids_horizontal)[0]
-    
-        if not old_res or (1, palindrome_mids_horizontal) != old_res:
-            return (1, palindrome_mids_horizontal)
-
+    # Checking for horizontal split, the point that is the mid of palindrome(s) in all rows
+    for palindrome_mid in palindrome_mids_horizontal:
+        if not old_res or (1, palindrome_mid) != old_res:
+            return (1, palindrome_mid)
 
     #Vertical processing
     for c in range(sz_c):
         col_palindrome_mids = set()
-
         for palindrome_mid in range(1, sz_r):
             palindrome_start, palindrome_end = palindrome_mid - 1, palindrome_mid
-
             while palindrome_start >= 0 and palindrome_end < sz_r and mp[palindrome_start][c] == mp[palindrome_end][c]:
                 palindrome_start -= 1
                 palindrome_end += 1
@@ -47,12 +41,9 @@ def process_map(mp: List[List[str]], old_res: Tuple[int, int] = None) -> Tuple[i
 
         palindrome_mids_vertical = col_palindrome_mids if c == 0 else palindrome_mids_vertical.intersection(col_palindrome_mids)
 
-    # Checking for vertical split, the id that is the mid of palindrome(s) in all columns
-    if palindrome_mids_vertical:
-        palindrome_mids_vertical = list(palindrome_mids_vertical)[0]
-    
-        if not old_res or (100, palindrome_mids_vertical) != old_res:
-            return (100, palindrome_mids_vertical)
+    for palindrome_mid in palindrome_mids_vertical:
+        if not old_res or (100, palindrome_mid) != old_res:
+            return (100, palindrome_mid)
 
 
 input = [line.strip() for line in open("input").readlines()]
