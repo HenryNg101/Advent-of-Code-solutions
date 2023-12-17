@@ -1,3 +1,7 @@
+import time
+
+# Start the timer
+start_time = time.time()
 input = [line.strip() for line in open("input").readlines()]
 r_sz, c_sz = len(input), len(input[0])
 
@@ -33,3 +37,4 @@ def distance_after_expand(galaxies, new_size_rate: int):
 
 print(f'Part 1: {distance_after_expand([galaxy[:] for galaxy in galaxies], 2)}')
 print(f'Part 2: {distance_after_expand(galaxies, 1000000)}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

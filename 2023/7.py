@@ -1,3 +1,7 @@
+import time
+
+# Start the timer
+start_time = time.time()
 input = open("input").readlines()
 
 # Get ranking of each hand, the stronger the type, the higher rank
@@ -64,3 +68,4 @@ for line in input:
 
 print(f'Part 1: {calculate_total_winnings(cards_hands_a, cards_order_a)}')
 print(f'Part 2: {calculate_total_winnings(cards_hands_b, cards_order_b)}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

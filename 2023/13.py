@@ -1,4 +1,8 @@
 from typing import List, Tuple
+import time
+
+# Start the timer
+start_time = time.time()
 
 def process_map(mp: List[List[str]], old_res: Tuple[int, int] = None) -> Tuple[int, int] | None:
     sz_r, sz_c = len(mp), len(mp[0])
@@ -81,3 +85,4 @@ while line_id < len(input):
 
 print(f'Part 1: {res_a}')
 print(f'Part 2: {res_b}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

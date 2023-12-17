@@ -1,3 +1,8 @@
+import time
+
+# Start the timer
+start_time = time.time()
+
 def dfs(start):
     visited, visited_pos = set(), set()
     st = [start]
@@ -51,3 +56,4 @@ for r in range(sz_r):
 
 print(f'Part 1: {dfs((0, 0, 0, 1))}')
 print(f'Part 2: {res_b}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

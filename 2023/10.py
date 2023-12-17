@@ -1,4 +1,8 @@
 import numpy as np
+import time
+
+# Start the timer
+start_time = time.time()
 
 input = [list(line.strip()) for line in open("input").readlines()]
 visited_locs = set()
@@ -97,3 +101,4 @@ for r in np.arange(0, row_sz, 0.5):
         res_b += dfs(r, c) if (r, c) not in visited_locs else 0
 
 print(f'Part 2: {res_b}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

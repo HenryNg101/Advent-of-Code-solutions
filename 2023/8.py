@@ -1,5 +1,9 @@
 from typing import Set, List
 import math
+import time
+
+# Start the timer
+start_time = time.time()
 
 # Find out required steps for each node in the list to reach one of the valid end node(s)
 def required_steps(start_nodes: List[str], valid_end_nodes: Set[str]) -> List[int]:
@@ -42,3 +46,4 @@ for i in range(2, len(input)):
 # Print result. In part 2, calculate LCM for all numbers are calculated
 print(f"Part 1: {required_steps(['AAA'], {'ZZZ'})[0]}")
 print(f"Part 2: {math.lcm(*required_steps(start_nodes, valid_end_nodes))}")
+print(f'Elapsed time: {time.time() - start_time} seconds')

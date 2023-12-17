@@ -1,3 +1,8 @@
+import time
+
+# Start the timer
+start_time = time.time()
+
 def calculate_hash(orginal_str: str):
     hash_val = 0
     for char in orginal_str:
@@ -46,3 +51,4 @@ for operation_id, box in enumerate(boxes):
 
 print(f'Part 1: {res_a}')
 print(f'Part 2: {res_b}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

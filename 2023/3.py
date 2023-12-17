@@ -1,4 +1,8 @@
 from typing import Dict, Tuple
+import time
+
+# Start the timer
+start_time = time.time()
 
 '''Return adjacent positions of a position'''
 def adjacent_map(r: int, c: int) -> Dict[Tuple[int, int], bool]:
@@ -72,3 +76,4 @@ for r in range(sz_r):
             
 print(f"Part 1: {res_a}")
 print(f"Part 2: {res_b}")
+print(f'Elapsed time: {time.time() - start_time} seconds')

@@ -1,3 +1,8 @@
+import time
+
+# Start the timer
+start_time = time.time()
+
 def move_north() -> None:
     for r in range(sz_r):
         for c in range(sz_c):
@@ -73,3 +78,5 @@ for iteration in range(cycles_count):
         break
 
     cache[key] = calculate_load()
+
+print(f'Elapsed time: {time.time() - start_time} seconds')

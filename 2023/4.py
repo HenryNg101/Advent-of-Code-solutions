@@ -1,3 +1,7 @@
+import time
+
+# Start the timer
+start_time = time.time()
 input = open("input").readlines()
 res_a = 0
 winning_counts = [] #Count the amount of winning numbers for each card
@@ -33,3 +37,4 @@ for id in range(cards_sets_count):
 #Print final result
 print(f"Part 1: {res_a}")
 print(f"Part 2: {sum(copies_counts)}")
+print(f'Elapsed time: {time.time() - start_time} seconds')

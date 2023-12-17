@@ -1,3 +1,7 @@
+import time
+
+# Start the timer
+start_time = time.time()
 input = open("input").readlines()
 
 # Store seeds for part 1
@@ -59,3 +63,4 @@ while id < sz:
 
 print(f'Part 1: {min(seeds)}')
 print(f'Part 2: {min(seed_ranges)[0]}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

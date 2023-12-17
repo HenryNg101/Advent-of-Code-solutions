@@ -1,5 +1,9 @@
 from typing import List
 import functools as ft
+import time
+
+# Start the timer
+start_time = time.time()
 
 # Knapsack DP style
 # With each '?', you can choose to skip or count in. For the case of '.'/'#', it's already obvious to skip/proceed
@@ -79,3 +83,4 @@ for id, line in enumerate(input):
 
 print(f'Part 1: {res_a}')
 print(f'Part 2: {res_b}')
+print(f'Elapsed time: {time.time() - start_time} seconds')

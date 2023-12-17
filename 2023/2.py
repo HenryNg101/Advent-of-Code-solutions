@@ -1,4 +1,8 @@
 import math
+import time
+
+# Start the timer
+start_time = time.time()
 
 input = open("input").readlines()
 limits = {'red': 12, 'green': 13, 'blue': 14}
@@ -43,3 +47,4 @@ for line in input:
 
 print(f"Part 1: {res_a}")
 print(f"Part 2: {res_b}")
+print(f'Elapsed time: {time.time() - start_time} seconds')

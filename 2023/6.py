@@ -1,4 +1,8 @@
 import math
+import time
+
+# Start the timer
+start_time = time.time()
 
 '''
 Math works for this code:
@@ -33,10 +37,11 @@ def count_winning_ways(time: int, distance: int) -> int:
 input = open("input").readlines()
 
 #Part 1 code
-times, distances = [[int(val) for val in line.split()[1:]] for line in input]
-res_a = math.prod([count_winning_ways(times[i], distances[i]) for i in range(len(times))])
+durations, distances = [[int(val) for val in line.split()[1:]] for line in input]
+res_a = math.prod([count_winning_ways(durations[i], distances[i]) for i in range(len(durations))])
 print(f"Part 1: {res_a}")
 
 #Join numbers to get the time and distance for part 2
-time, distance = [int(''.join(line.split()[1:])) for line in input]
-print(f"Part 2: {count_winning_ways(time, distance)}")
+duration, distance = [int(''.join(line.split()[1:])) for line in input]
+print(f"Part 2: {count_winning_ways(duration, distance)}")
+print(f'Elapsed time: {time.time() - start_time} seconds')
