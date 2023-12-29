@@ -45,6 +45,10 @@ for cycle in range(1, 10 ** 8):
     while q:
         input_name, module_name, pulse = q.pop(0)
 
+        # Part 1 algorithm
+        low_pulses_cnt += pulse == 0
+        high_pulses_cnt += pulse == 1
+
         '''
         Part 2 algorithm. The reasoning here is that, through observation in the input, we can see that, there is always 
         one conjuntion module sends output to the rx module, and, all of the input modules for this conjuntion module 
@@ -83,10 +87,6 @@ for cycle in range(1, 10 ** 8):
 
         for module in output_mapping[module_name]:
             q.append((module_name, module, pulse))
-        
-        # Part 1 algorithm
-        low_pulses_cnt += (pulse == 0)
-        high_pulses_cnt += int(pulse == 1)
 
     if cycle == 1000:
         print(f'Part 1: {low_pulses_cnt * high_pulses_cnt}')
