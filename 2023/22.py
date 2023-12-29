@@ -1,39 +1,37 @@
-import sys
+from collections import defaultdict
 from copy import deepcopy
+import sys
 import time
+import functools as ft
 
 # Start the timer
 start_time = time.time()
 
-# Simulate bricks falling until stop, return the amount of fallen bricks during the process
-def bricks_falling_simulation(cubes_positions, bricks):
-    fallen_bricks_ids = set()
-    while True:
-        continue_simulation = False
-        for i, brick in enumerate(bricks):
-            # Skip the currently removed brick, for sure
+def is_supporting(brick1, brick2):
+    # (sx1, sy1, sz1), (ex1, ey1, ez1) = brick1
+    # (sx2, sy2, sz2), (ex2, ey2, ez2) = brick2
 
-            is_brick_fall = True
-            for (x, y, z) in brick:
-                is_brick_fall &= (z > 1) and ((x, y, z - 1) not in cubes_positions or (x, y, z - 1) in brick)
-                if not is_brick_fall:
-                    break
-                    
-            if is_brick_fall:
-                continue_simulation = True
-                fallen_bricks_ids.add(i)
+    brick1 = set([tuple(cube) for cube in brick1])
+    brick2 = set([tuple(cube) for cube in brick2])
+    
+    for (x, y, z) in brick1:
+        if (x, y, z+1) not in brick1 and (x, y, z+1) in brick2:
+            return True
+        
+    return False
 
-                for (x, y, z) in brick:
-                    cubes_positions.discard((x, y, z))
-                    cubes_positions.add((x, y, z - 1))
+def kahn(start_id, indegrees):
+    st = [start_id]
+    res = -1
+    while st:
+        curr = st.pop()
+        res += 1
 
-                bricks[i] = [(x, y, z - 1) for (x, y, z) in brick]
-                
-        if not continue_simulation:
-            break
-
-    return len(fallen_bricks_ids)
-
+        for next in mp[curr]:
+            indegrees[next] -= 1
+            if indegrees[next] == 0:
+                st.append(next)
+    return res
 
 input = [line.strip() for line in open("input").readlines()]
 bricks = []
@@ -54,21 +52,59 @@ for line in input:
 
 cubes_positions = set([(x, y, z) for brick in bricks for (x, y, z) in brick])
 
-bricks_falling_simulation(cubes_positions, bricks)  # Let initial bricks fall first
+# Simulate bricks falling until stop
+while True:
+    continue_simulation = False
+    for i, brick in enumerate(bricks):
+        # Skip the currently removed brick, for sure
 
-# Just remove brick, one by one, then count
+        is_brick_fall = True
+        for (x, y, z) in brick:
+            is_brick_fall &= (z > 1) and ((x, y, z - 1) not in cubes_positions or (x, y, z - 1) in brick)
+            if not is_brick_fall:
+                break
+                
+        if is_brick_fall:
+            continue_simulation = True
+            for (x, y, z) in brick:
+                cubes_positions.discard((x, y, z))
+                cubes_positions.add((x, y, z - 1))
+            bricks[i] = [(x, y, z - 1) for (x, y, z) in brick]
+            
+    if not continue_simulation:
+        break
+
+# print(f"Elapsed time: {time.time() - start_time} seconds")
+
+# This needed to be optimized
+mp = defaultdict(list)
+indegrees = defaultdict(int)
+
+# for i in range(len(bricks)):
+#     bricks[i] = (bricks[i][0], bricks[i][-1])
+
+# sys.exit(0)
+for i in range(len(bricks)):
+    for j in range(i+1, len(bricks)):
+        if is_supporting(bricks[i], bricks[j]):
+            mp[i].append(j)
+            indegrees[j] += 1
+        if is_supporting(bricks[j], bricks[i]):
+            mp[j].append(i)
+            indegrees[i] += 1
+
+# print(f"Elapsed time: {time.time() - start_time} seconds")
+
 p1, p2 = 0, 0
-for i, brick in enumerate(bricks):
-    cubes_positions_copy = deepcopy(cubes_positions)
-    bricks_copy = [brick for j, brick in enumerate(bricks) if j != i]
-    for (x, y, z) in brick:
-        cubes_positions_copy.discard((x, y, z))
+for i in range(len(bricks)):
+    indegrees_cpy = defaultdict(int)
+    for k, v in indegrees.items():
+        indegrees_cpy[k] = v
 
-    # Another falling simulation
-    fallen_bricks_cnt = bricks_falling_simulation(cubes_positions_copy, bricks_copy)
-    if fallen_bricks_cnt == 0:
+    count = kahn(i, indegrees_cpy)
+    if count == 0:
         p1 += 1
-    p2 += fallen_bricks_cnt
+    p2 += count
 
 print(f'Part 1: {p1}')
 print(f'Part 2: {p2}')
