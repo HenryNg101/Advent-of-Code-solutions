@@ -35,9 +35,9 @@ def bricks_falling_simulation(cubes_positions, bricks):
     return len(fallen_bricks_ids)
 
 
-L = open(sys.argv[1]).read().strip().split("\n")
+input = [line.strip() for line in open("input").readlines()]
 bricks = []
-for line in L:
+for line in input:
     start, end = line.split("~")
     start_x, start_y, start_z = [int(x) for x in start.split(",")]
     end_x, end_y, end_z = [int(x) for x in end.split(",")]
