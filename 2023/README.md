@@ -18,7 +18,7 @@ Here is a quick overview of approaches to the problems (To learn more, go to the
 - Day 15: Simple simulation
 - Day 16: Simple **BFS/DFS**. Even second part can brute force by BFS/DFS on every valid starting points and every directions (It's not the whole map, so it's not too large)
 - Day 17: **Dijkstra algorithm**. But with a limit on the minimum traveled blocks to turn, and maximum traveled blocks before a force turn.
-- Day 18: BFS/DFS (Only works with part 1, on small size input). **Shoelace formula** fits perfectly with the problem. I also heard about sweeping line algorithm, will try it in the future.
+- Day 18: BFS/DFS (Only works with part 1, on small size input). **Shoelace formula** fits perfectly with the problem. I also heard about **sweep line algorithm**, will try it in the future.
 - Day 19: DFS on second part, to find min and max possible values of all four ratings. Then do a product on these four rating ranges.
 - Day 20: Simple simulation on first part. Second part needs to use LCM on the modules that are related very closely to the final goal. Read more on the code file to understand.
 - Day 21: Straightforward BFS on part 1. Highly complex finding pattern and optimization problem on part 2. Read more on the code file to find out.
