@@ -61,8 +61,7 @@ print(f'Part 1: {res_a}')
 
 # DFS from one unvisited node, used for part 2 algorithm
 def dfs(r, c):
-    st = []
-    st.append((r, c))
+    st = [(r, c)]
     valid_area = True
     res = 0
     
