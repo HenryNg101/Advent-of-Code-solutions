@@ -4,7 +4,43 @@ fn is_valid_number(s: &str) -> bool {
     s.parse::<f64>().is_ok()
 }
 
-// Calculate signal to wire a using Kahn algorithm
+fn get_value(expression: &Vec<&str>, expression_id: usize, val_mapping: &HashMap<&str, i32>) -> i32{
+    if is_valid_number(expression[expression_id]) {
+        expression[expression_id].parse::<i32>().unwrap()
+    }
+    else {
+        *val_mapping.get(&expression[expression_id]).unwrap()
+    }
+}
+
+// Given the mapping of existing values, and an expression, this function calculate the result of that expression
+// There are 3 types of expression:
+// - a -> b (exp len 1): Give a value to another value directly
+// - NOT a -> b (exp len 2): Flip a value to get it
+// - a op c -> b (exp len 3): Interact 2 values to get it
+fn evaluate_expression(expression: &Vec<&str>, val_mapping: &HashMap<&str, i32>) -> i32{
+    let mut cal_res = get_value(expression, expression.len() - 1, val_mapping);
+    match expression.len() {
+        2 => {
+            cal_res ^= 65535;
+        },
+        3 => {
+            let mut other_op = get_value(expression, 0, val_mapping);
+            match expression[1] {
+                "AND" => other_op &= cal_res,
+                "OR" => other_op |= cal_res,
+                "LSHIFT" => other_op <<= cal_res,
+                "RSHIFT" => other_op >>= cal_res,
+                _ => {}
+            }
+            cal_res = other_op;
+        },
+        _ => {}
+    }
+    cal_res
+}
+
+// Calculate signal to wire "a" using Kahn algorithm
 fn calculate_signal<'a>(
     mp: &'a HashMap<&'a str, Vec<&'a str>>, 
     expressions: &'a HashMap<&'a str, Vec<&'a str>>, 
@@ -14,76 +50,34 @@ fn calculate_signal<'a>(
     let mut stack = vec![];  // Will be important for Kahn algorithm
     let mut val_mapping = HashMap::new();  // Map the value of the node to it
     
-    // Init the Kahn algorithm
     for (&node, &indegree) in indegrees.iter() {
         if indegree == 0 {
             stack.push(node);
         }
     }
 
-    // Main algorithm
     while !stack.is_empty() {
         let curr = stack[stack.len() - 1];
         stack.pop();
 
         if mp.get(curr).is_some() {
             for child in mp.get(curr).unwrap() {
-                indegrees.insert(child, indegrees.get(child).unwrap() - 1);
-                if *indegrees.get(child).unwrap() == 0 {
-                    stack.push(child);
+                if let Some(indegree) = indegrees.get_mut(child) {
+                    *indegree -= 1;
+                    if *indegree == 0 {
+                        stack.push(child);
+                    }
                 }
             }
         }
 
+        // Assign value to the current wire
         let expression = expressions.get(curr).unwrap();
-        let mut cal_res = -1;
-
-        match expression.len() {
-            1 => {
-                cal_res = if is_valid_number(expression[0]) {
-                    expression[0].parse::<i32>().unwrap()
-                }
-                else {
-                    *val_mapping.get(&expression[0]).unwrap()
-                };
-            },
-            2 => {
-                cal_res = if is_valid_number(expression[1]) {
-                    expression[1].parse::<i32>().unwrap()
-                }
-                else {
-                    *val_mapping.get(&expression[1]).unwrap()
-                };
-                cal_res ^= 65535;
-            },
-            3 => {
-                cal_res = if is_valid_number(expression[0]) {
-                    expression[0].parse::<i32>().unwrap()
-                }
-                else {
-                    *val_mapping.get(&expression[0]).unwrap()
-                };
-
-                let other_op = if is_valid_number(expression[2]) {
-                    expression[2].parse::<i32>().unwrap()
-                }
-                else {
-                    *val_mapping.get(&expression[2]).unwrap()
-                };
-
-                match expression[1] {
-                    "AND" => cal_res &= other_op,
-                    "OR" => cal_res |= other_op,
-                    "LSHIFT" => cal_res <<= other_op,
-                    "RSHIFT" => cal_res >>= other_op,
-                    _ => {}
-                }
-            },
-            _ => {}
-        }
-        val_mapping.insert(curr, cal_res);
         if curr == "b" && changed_value != None {
             val_mapping.insert(curr, changed_value.unwrap());
+        }
+        else {
+            val_mapping.insert(curr, evaluate_expression(expression, &val_mapping));
         }
     }
     return *val_mapping.get(&"a").unwrap();
@@ -104,31 +98,15 @@ fn main(){
         let var = line[line.len() - 1];
         let mut level = 0;
 
-        match exp.len() {
-            1 => {
-                if !is_valid_number(exp[0]) {
-                    level += 1;
-                    mp.entry(exp[0]).or_default().push(var);
-                }
-            },
-            2 => {
-                if !is_valid_number(exp[1]) {
-                    level += 1;
-                    mp.entry(exp[1]).or_default().push(var);
-                }
-            },
-            3 => {
-                if !is_valid_number(exp[0]) {
-                    level += 1;
-                    mp.entry(exp[0]).or_default().push(var);
-                }
-                if !is_valid_number(exp[2]) {
-                    level += 1;
-                    mp.entry(exp[2]).or_default().push(var);
-                }
-            },
-            _ => {}
+        // Based on the pattern of all expresisons, the last one is always needed
+        if !is_valid_number(exp[exp.len() - 1]) {
+            level += 1;
+            mp.entry(exp[exp.len() - 1]).or_default().push(var);
         }
+        if exp.len() == 3 && !is_valid_number(exp[0]) {
+            level += 1;
+            mp.entry(exp[0]).or_default().push(var);
+        }    
         indegrees.insert(var, level);
         expressions.insert(var, exp);
     }
