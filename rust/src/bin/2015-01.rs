@@ -1,7 +1,7 @@
-use std::fs;
+use my_project::get_input;
 
 fn main() {
-    let content = fs::read_to_string("input.txt").expect("Can't read from file");
+    let content = get_input(2015, 1).expect("Can't get the content");
 
     let mut floor = 0;
     let mut res_b = None;
