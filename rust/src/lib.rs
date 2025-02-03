@@ -42,7 +42,9 @@ pub fn get_input(year: i32, day: i32) -> Result<String, Box<dyn Error>> {
         .headers(header)
         .send()?
         .text()?;
-    input_data.pop();   // Remove the last character, which is a terminating '\n', not needed
+    if input_data.ends_with('\n'){
+        input_data.pop();   // Remove the last character, which is a terminating '\n', not needed
+    }
     fs::write(&input_filename, &input_data)?;
 
     Ok(input_data)

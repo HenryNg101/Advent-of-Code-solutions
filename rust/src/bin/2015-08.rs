@@ -24,7 +24,7 @@ fn main(){
         res_a += line.len() - mem_count;
 
         // Logic part B. Added 2 to include the pair of double quotes that u always needed
-        res_b += line.iter().filter(|&&chr| chr == b'\"' && chr == b'\\').count() + 2;
+        res_b += line.iter().filter(|&&chr| chr == b'\"' || chr == b'\\').count() + 2;
     }
     println!("Part A: {}", res_a);
     println!("Part B: {}", res_b);
