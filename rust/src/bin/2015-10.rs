@@ -1,4 +1,4 @@
-use std::fs;
+use my_project::get_input;
 
 fn count_and_say(content: &str, iteration: usize) -> usize {
     let mut cpy: Vec<u8> = content.bytes().collect(); // Work with bytes directly for performance
@@ -49,8 +49,7 @@ fn count_and_say(content: &str, iteration: usize) -> usize {
 }
 
 fn main() {
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 10).expect("Can't read from file");
 
     println!("{}", count_and_say(&content, 40));
     println!("{}", count_and_say(&content, 50));

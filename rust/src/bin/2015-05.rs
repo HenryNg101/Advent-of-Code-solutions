@@ -1,8 +1,8 @@
-use std::{collections::HashMap, fs};
+use std::collections::HashMap;
+use my_project::get_input;
 
 fn main(){
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 5).expect("Can't read from file");
 
     let mut res_a = 0;
     let mut res_b = 0;

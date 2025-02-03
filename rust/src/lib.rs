@@ -37,11 +37,12 @@ pub fn get_input(year: i32, day: i32) -> Result<String, Box<dyn Error>> {
     
     // Make a get request to the url, with the customized header, then cache the data to a file
     let client = Client::new();
-    let input_data = client
+    let mut input_data = client
         .get(format!("https://adventofcode.com/{}/day/{}/input", year, day))
         .headers(header)
         .send()?
         .text()?;
+    input_data.pop();   // Remove the last character, which is a terminating '\n', not needed
     fs::write(&input_filename, &input_data)?;
 
     Ok(input_data)

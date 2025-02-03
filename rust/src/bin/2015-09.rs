@@ -1,4 +1,5 @@
-use std::{cmp::{max, min}, collections::{HashMap, HashSet}, fs, u32};
+use std::{cmp::{max, min}, collections::{HashMap, HashSet}, u32};
+use my_project::get_input;
 
 // Finding all permutations
 fn permute(
@@ -21,8 +22,7 @@ fn permute(
 }
 
 fn main(){
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 9).expect("Can't read from file");
 
     let mut mp = HashMap::new();
     let mut stops = HashSet::new();

@@ -1,5 +1,5 @@
 use md5;
-use std::fs;
+use my_project::get_input;
 
 fn lowest_md5(content: &str, n: usize) -> i32{
     let cmp = &"0".repeat(n);
@@ -14,8 +14,7 @@ fn lowest_md5(content: &str, n: usize) -> i32{
 }
 
 fn main(){
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 4).expect("Can't read from file");
 
     println!("Part A: {}", lowest_md5(&content, 5));
     println!("Part B: {}", lowest_md5(&content, 6));

@@ -1,4 +1,5 @@
-use std::{cmp::max, fs};
+use std::cmp::max;
+use my_project::get_input;
 
 // Turns a coordination in string to tuple of numbers
 // E.g: "10,20" => (10, 20)
@@ -23,8 +24,7 @@ fn parse_instruction(line: &str) -> (&str, (usize, usize), (usize, usize)) {
 }
 
 fn main(){
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 6).expect("Can't read from file");
 
     let mut grid_a = [[false; 1000]; 1000];
     let mut grid_b = [[0; 1000]; 1000];

@@ -1,5 +1,5 @@
-use std::fs;
 use serde_json::Value;
+use my_project::get_input;
 
 fn traverse(json_doc: &Value, ignore_value: Option<&str>) -> i64 {
     match json_doc {
@@ -21,8 +21,7 @@ fn traverse(json_doc: &Value, ignore_value: Option<&str>) -> i64 {
 }
 
 fn main(){
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 12).expect("Can't read from file");
 
     // Parse JSON data into an unstructured json data form
     let parsed_json: Value = serde_json::from_str(&content)

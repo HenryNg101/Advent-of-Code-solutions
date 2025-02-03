@@ -1,4 +1,5 @@
-use std::{collections::HashMap, fs};
+use std::collections::HashMap;
+use my_project::get_input;
 
 fn execute_program(content: &Vec<&str>, register_a: i32, register_b: i32) -> i32 {
     let mut inst_cnt: i32 = 0;   // The current instruction
@@ -37,8 +38,7 @@ fn execute_program(content: &Vec<&str>, register_a: i32, register_b: i32) -> i32
 }
 
 fn main(){
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 23).expect("Can't read from file");
 
     let content: Vec<&str> = content.split('\n').collect();
     println!("Part A: {}", execute_program(&content, 0, 0));

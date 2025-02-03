@@ -1,5 +1,6 @@
-use std::{cmp::max, collections::{HashMap, HashSet}, fs, i32};
+use std::{cmp::max, collections::{HashMap, HashSet}, i32};
 use itertools::Itertools;
+use my_project::get_input;
 
 fn optimal_hapiness(peoples: &HashSet<&str>, mp: &HashMap<(&str, &str), i32>) -> i32 {
     let mut max_dis = i32::MIN;
@@ -15,8 +16,7 @@ fn optimal_hapiness(peoples: &HashSet<&str>, mp: &HashMap<(&str, &str), i32>) ->
 }
 
 fn main() {
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 13).expect("Can't read from file");
 
     let mut mp = HashMap::new();
     let mut peoples = HashSet::new();

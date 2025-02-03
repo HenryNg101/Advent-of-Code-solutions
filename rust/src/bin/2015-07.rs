@@ -1,4 +1,5 @@
-use std::{collections::HashMap, fs};
+use std::collections::HashMap;
+use my_project::get_input;
 
 fn is_valid_number(s: &str) -> bool {
     s.parse::<f64>().is_ok()
@@ -84,8 +85,7 @@ fn calculate_signal<'a>(
 }
 
 fn main(){
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 7).expect("Can't read from file");
 
     let mut mp: HashMap<&str, Vec<&str>> = HashMap::new();    // Dependency graph
     let mut indegrees = HashMap::new();    // Indegree of each node

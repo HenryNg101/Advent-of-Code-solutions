@@ -1,4 +1,5 @@
-use std::{cmp::max, fs};
+use std::cmp::max;
+use my_project::get_input;
 
 struct Reindeer {
     speed: i32,         // Speed when flying
@@ -25,8 +26,7 @@ impl Reindeer {
 }
 
 fn main() {
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 14).expect("Can't read from file");
 
     let mut reindeers: Vec<Reindeer> = content
         .lines()

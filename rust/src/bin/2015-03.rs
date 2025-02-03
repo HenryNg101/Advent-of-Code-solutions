@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use std::fs;
+use my_project::get_input;
 
 fn received_presents_count(content: &str, deliverers_count: usize) -> usize{
     let mut start_locs = vec![(0, 0); deliverers_count]; // Deliverers positions
@@ -21,8 +21,7 @@ fn received_presents_count(content: &str, deliverers_count: usize) -> usize{
 }
 
 fn main() {
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 3).expect("Can't read from file");
 
     println!("Part A: {}", received_presents_count(&content, 1));
     println!("Part B: {}", received_presents_count(&content, 2));

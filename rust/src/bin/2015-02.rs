@@ -1,9 +1,8 @@
-use std::fs;
 use std::cmp::{min, max};
+use my_project::get_input;
 
 fn main() {
-    let content = fs::read_to_string("input.txt")
-        .expect("Can't read from file");
+    let content = get_input(2015, 2).expect("Can't read from file");
 
     let mut total_a = 0;
     let mut total_b = 0;
