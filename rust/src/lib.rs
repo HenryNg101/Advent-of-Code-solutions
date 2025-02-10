@@ -21,7 +21,7 @@ fn load_cookie_session(file_path: &str) -> Result<String, Box<dyn Error>> {
 // A synchronus version of getting input. I might use async later on, if needed
 pub fn get_input(year: i32, day: i32) -> Result<String, Box<dyn Error>> {
     // If the file exists and got cached, no need to making extra http requests
-    let input_dirname = "inputs";
+    let input_dirname = "../inputs";
     let input_filename = format!("{}/input_{}_{}.txt", input_dirname, year, day);
     fs::create_dir_all(input_dirname)?;  // Create the input folder if doesn't exist
 
@@ -31,7 +31,7 @@ pub fn get_input(year: i32, day: i32) -> Result<String, Box<dyn Error>> {
 
     // Otherwise, making that API call to fetch input
     // Insert the cookie's session value to the request's header
-    let cookie_header = format!("session={}", load_cookie_session("cookies.json")?);
+    let cookie_header = format!("session={}", load_cookie_session("../cookies.json")?);
     let mut header = HeaderMap::new();
     header.insert(COOKIE, HeaderValue::from_str(&cookie_header)?);
     

@@ -162,7 +162,7 @@ cython_debug/
 #.idea/
 .vscode/
 input*
-output
+output*
 *.txt
 
 # Kinda like env variables, each person got their own info

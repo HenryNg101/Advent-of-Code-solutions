@@ -6,6 +6,10 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
+# Check if the folder exists or not
+mkdir -p ../outputs
+
 # Capture the argument
 # Use one warmup run for file retrieval
-hyperfine "./target/release/$1 > output" --export-markdown benchmark-output/"$1.md" --warmup 1
+hyperfine "./target/release/$1 > ../outputs/$1.txt" \
+    --export-markdown benchmark-output/"$1.md" --warmup 1
