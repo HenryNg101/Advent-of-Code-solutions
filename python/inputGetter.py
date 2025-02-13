@@ -1,8 +1,10 @@
 import requests
 import json
 from pathlib import Path
+import os
 
 def load_cookies(file_path: str) -> dict:
+    print(os.getcwd())
     try:
         with open(file_path, 'r') as file:
             return json.load(file)
@@ -10,8 +12,8 @@ def load_cookies(file_path: str) -> dict:
         raise ValueError(f"Error loading cookies: {e}")
 
 def get_input(year: int, day: int):
-    input_dir = Path('../inputs')
-    input_file = input_dir / f'input_{year}_{day}.txt'  # Join the folder and filename to get the path
+    input_dir = Path('inputs')
+    input_file = input_dir / f'{year}-{day}.txt'  # Join the folder and filename to get the path
     
     if input_file.exists():
         return input_file.read_text()
@@ -20,7 +22,7 @@ def get_input(year: int, day: int):
     
     response = requests.get(
         f'https://adventofcode.com/{year}/day/{day}/input', 
-        cookies = load_cookies('../cookies.json')
+        cookies = load_cookies('cookies.json')
     )
     
     if not response.ok:
