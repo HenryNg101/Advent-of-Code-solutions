@@ -17,7 +17,7 @@ with extreme cases being **100x faster**. Below is the performance comparison fo
 | 2015 | 1 | Simulation | 240ms ([Link](./benchmark-output/python/2015-01.md)) | 8ms ([Link](./benchmark-output/rust/2015-01.md)) | **30x** |
 | 2015 | 2  | Math & Geometry | 236ms ([Link](./benchmark-output/python/2015-02.md)) | 7ms ([Link](./benchmark-output/rust/2015-02.md)) | **33x** |
 | 2015 | 3  | Simulation & Set | 244ms ([Link](./benchmark-output/python/2015-03.md)) | 8ms ([Link](./benchmark-output/rust/2015-03.md)) | **30x** |
-| 2015 | 4  | Brute force | 8.1s ([Link](./benchmark-output/python/2015-04.md)) | 7.5s ([Link](./benchmark-output/rust/2015-04.md)) | <span style="background-color: yellow; font-weight: bold;">Almost the same</span> |
+| 2015 | 4  | Brute force | 8.1s ([Link](./benchmark-output/python/2015-04.md)) | 7.5s ([Link](./benchmark-output/rust/2015-04.md)) | **⚠️ Almost the same (needs improvement)** |
 | 2015 | 5  | String & Counting | 279ms ([Link](./benchmark-output/python/2015-05.md)) | 10ms ([Link](./benchmark-output/rust/2015-05.md)) | **28x** |
 | 2015 | 6  | Optimization & Caching | 8.4s ([Link](./benchmark-output/python/2015-06.md)) | 70ms ([Link](./benchmark-output/rust/2015-06.md)) | **120x !!** |
 | 2015 | 7  | Graph & Kahn algorithm | 282ms ([Link](./benchmark-output/python/2015-07.md)) | 8ms ([Link](./benchmark-output/rust/2015-07.md)) | **35x** |
@@ -43,10 +43,10 @@ For full benchmarking results with more details, check the `benchmark-output` fo
 ## 🛠 How to Run
 
 ### 🔑 Setting Up `cookies.json`
-Before running the solutions, create a `cookies.json` file to retrieve input files from AoC's server. The location of this file depends on where you run the program:
+Before running the solutions, create a `cookies.json` file to retrieve input files from AoC's server. The `cookies.json` file should be placed **where the program is executed**:
 
-- **If you run the program from the root directory** (e.g., when executing commands like ./benchmark.sh), place `cookies.json` in the **root** folder.
-- **If you run the program from within the rust or python folder**, place the `cookies.json` file **inside the respective folder** (either `/rust` or `/python`).
+- If running from the root (`./benchmark.sh`), place `cookies.json` in the **root folder**.
+- If running from `rust/` or `python/`, place `cookies.json` inside that respective folder.
 
 Here’s an example of the `cookies.json` file format:
 
