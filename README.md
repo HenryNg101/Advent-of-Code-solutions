@@ -14,22 +14,23 @@ with extreme cases being **100x faster**. Below is the performance comparison fo
 
 | Year | Day | Problem Type | Python Time | Rust Time | Speedup |
 |------|----|--------------|-------------|-----------|---------|
-| 2015 | 1  | Simulation   | 240ms         | 8ms      | **30x** 🚀 |
+| 2015 | 1 | Simulation | 240ms ([Link](./benchmark-output/python/2015-01.md)) | 8ms ([Link](./benchmark-output/rust/2015-01.md)) | **30x** |
+| 2015 | 2  | Math & Geometry | 236ms ([Link](./benchmark-output/python/2015-02.md)) | 7ms ([Link](./benchmark-output/rust/2015-02.md)) | **33x** |
 
-For full benchmarking results with more details, check the `benchmark-output` folder inside each language directory.
+For full benchmarking results with more details, check the `benchmark-output` folder inside each language directory, or click the links above.
 
 ## 📂 Project Structure
 ```
 📂 Advent-of-Code
+ ┣ 📂 benchmark-output   # Benchmark results for all programs
+ ┃ ┣ 📂 rust/            # Benchmark for Rust files
+ ┃ ┗ 📂 python/          # Benchmark for Python files
  ┣ 📂 rust/              # Solutions implemented in Rust, managed by Cargo
- ┃ ┣ 📂 benchmark-output # Benchmark results for Rust files
  ┃ ┣ 📂 src/             # Rust source code
  ┃ ┗ 📜 Cargo.toml       # Rust package manager file
  ┣ 📂 python/            # Initial solutions written in Python & Jupyter Notebook
- ┃ ┣ 📂 benchmark-output # Benchmark results for Python files
  ┃ ┗ 📜 requirements.txt # Python dependencies
- ┣ 📂 inputs/            # Input files for each problem
- ┣ 📂 outputs/           # Output files from executed programs
+ ┣ 📂 inputs/            # Cached input files for problems
  ┣ 📜 README.md          # This file
  ┗ 📜 cookies.json       # Stores session cookie (not included in the repo, have to be created manually)
 ```
@@ -37,7 +38,12 @@ For full benchmarking results with more details, check the `benchmark-output` fo
 ## 🛠 How to Run
 
 ### 🔑 Setting Up `cookies.json`
-Before running the solutions, create a `cookies.json` file in the root directory to retrieve input files from AoC's server:
+Before running the solutions, create a `cookies.json` file to retrieve input files from AoC's server. The location of this file depends on where you run the program:
+
+- **If you run the program from the root directory** (e.g., when executing commands like ./benchmark.sh), place `cookies.json` in the **root** folder.
+- **If you run the program from within the rust or python folder**, place the `cookies.json` file **inside the respective folder** (either `/rust` or `/python`).
+
+Here’s an example of the `cookies.json` file format:
 
 ```json
 {
@@ -49,16 +55,42 @@ Before running the solutions, create a `cookies.json` file in the root directory
 
 ### 🦀 Running Rust Solutions
 ```sh
+cargo build --release --manifest-path ./rust/Cargo.toml
+./rust/target/release/<yyyy>-<dd>
+```
+
+Or:
+```sh
 cd rust
-cargo build --release --bin <yyyy>-<dd>
+cargo build --release
 ./target/release/<yyyy>-<dd>
 ```
 
+Adding the `--bin <yyyy>-<dd>` option in `cargo build` command if you only want to build for specific day
+
 ### 🐍 Running Python Solutions
+```sh
+pip install -r python/requirements.txt
+python python/<yyyy>-<dd>.py
+```
+
+Or:
+
 ```sh
 cd python
 pip install -r requirements.txt
-# Then run the notebook files, or execute a script directly:
-python <file_name>.py
+python <yyyy>-<dd>.py
 ```
 
+### Benchmarking solutions on your own
+
+```sh
+./benchmark.sh <language> <yyyy>-<dd>
+```
+
+For `language` option, it can only either be `python` or `rust`. For example:
+
+```sh
+./benchmark.sh python 2015-01
+./benchmark.sh rust 2015-01
+```

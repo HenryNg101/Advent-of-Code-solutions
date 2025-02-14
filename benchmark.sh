@@ -12,8 +12,6 @@ if ! command -v hyperfine &> /dev/null; then
     exit 1
 fi
 
-mkdir -p outputs
-
 if [ "$1" = "python" ]; then
     mkdir -p benchmark-output/python
 
@@ -28,10 +26,8 @@ elif [ "$1" = "rust" ]; then
     # Preprocessing
     mkdir -p benchmark-output/rust
 
-    if [ ! -f "./rust/target/release/$2" ]; then
-        echo "No binary exist. Building the solution's binary first"
-        cargo build --release --manifest-path ./rust/Cargo.toml --bin "$2"
-    fi
+    echo "Building the solution"
+    cargo build --release --manifest-path ./rust/Cargo.toml --bin "$2"
 
     # Getting the output to the terminal first
     # This run will also do some stuff so it can be used later, no need more warmup run from hyperfine
