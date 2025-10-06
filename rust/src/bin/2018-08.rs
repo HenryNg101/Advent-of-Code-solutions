@@ -1,6 +1,6 @@
 use my_project::get_input;
 
-#[derive(Clone)]
+// #[derive(Clone)]
 struct Node {
     metadatas: Vec<i32>,
     childrens: Vec<Node>,
@@ -19,11 +19,11 @@ fn create_tree(input: &Vec<i32>, id: &mut usize, res_a: &mut i32) -> Node {
     let child_count = input[*id] as usize;
     let metadata_count = input[*id+1] as usize;
     *id += 2;
-    let mut childrens = vec![Node::new(vec![], vec![]); child_count];
+    let mut childrens = Vec::with_capacity(child_count);
     let mut metadatas = vec![0; metadata_count];
 
-    for i in 0..child_count {
-        childrens[i] = create_tree(input, id, res_a);
+    for _ in 0..child_count {
+        childrens.push(create_tree(input, id, res_a));
     }
     for i in 0..metadata_count {
         metadatas[i] = input[*id];
